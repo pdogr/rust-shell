@@ -6,5 +6,4 @@ mod history;
 pub mod reader;
 mod signal;
 mod terminal;
-mod test;
 mod window;

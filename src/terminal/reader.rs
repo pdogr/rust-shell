@@ -73,7 +73,7 @@ impl<'a> Reader {
                 return Ok(Action::Exit);
               }
               Some(Ok(Action::Cancel)) => {
-                return Ok(Action::Exit);
+                return Ok(Action::Cancel);
               }
               Some(Ok(Action::Continue)) => {}
               Some(Err(e)) => {

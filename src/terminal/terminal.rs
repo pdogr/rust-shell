@@ -4,6 +4,7 @@ use super::history::History;
 use super::window::{get_winsize, Winsize};
 use libc::STDOUT_FILENO;
 use std::cell::RefCell;
+use std::env;
 use std::io::{self, Write};
 use std::rc::Rc;
 
@@ -23,6 +24,7 @@ impl Terminal {
       history: History::new(),
       buffer: Rc::new(RefCell::new(Buffer::new())),
       stdout_buffer: String::new(),
+      // prompt: format!("{} $ ",env::current_dir().unwrap().to_str().unwrap()).into(),
       prompt: "$ ".into(),
       window_size: get_winsize(STDOUT_FILENO).unwrap(),
     };
@@ -148,7 +150,7 @@ impl Terminal {
     self.write_str(&string);
   }
   pub fn write_prompt(&mut self) {
-    self.write_str(&self.prompt.clone());
+    self.write_str(&format!("{}", self.prompt.clone()));
   }
   fn write(&self, s: &str) -> io::Result<()> {
     let stdout = io::stdout();
@@ -216,10 +218,10 @@ pub mod terminal_test {
     assert_eq!(terminal.get(), Some(string));
   }
   #[test]
-  fn push_test(){
+  fn push_test() {
     let mut terminal = Terminal::new();
     let string: String = "dawdawd0981740 54 !!@!@$ ui h2".into();
     terminal.push(&string);
-    assert_eq!(terminal.buffer.borrow().as_str(),string);
+    assert_eq!(terminal.buffer.borrow().as_str(), string);
   }
 }

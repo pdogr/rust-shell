@@ -12,7 +12,10 @@ use termion::event::{Event, Key};
 pub struct Handler {}
 
 impl Handler {
-  pub fn handle_signal(terminal: &mut Terminal, signal: Signal) -> Option<Result<Action, io::Error>> {
+  pub fn handle_signal(
+    terminal: &mut Terminal,
+    signal: Signal,
+  ) -> Option<Result<Action, io::Error>> {
     match signal {
       Signal::SIGINT => {
         terminal.history.clear_buffer();
@@ -108,7 +111,11 @@ impl Handler {
           return Some(Ok(Action::from(line)));
         }
         None => {
-          return None;
+          terminal.history.clear_buffer();
+          terminal.reset();
+          terminal.write_linefeed();
+          terminal.write_line();
+          return Some(Ok(Action::Cancel));
         }
       },
       Key::Char(c) => {

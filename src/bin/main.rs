@@ -1,3 +1,4 @@
+// use shell::commands::builtins;
 use shell::parser::parser::Parser;
 use shell::terminal::action::Action;
 use shell::terminal::reader::Reader;
@@ -15,6 +16,7 @@ fn main() {
       Ok(Action::Line(input)) => {
         let mut parser = Parser::new(input);
         parser.build();
+        let _commands = parser.commands;
       }
       Err(_e) => {
         break;

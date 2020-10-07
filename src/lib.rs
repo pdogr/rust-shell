@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 #![allow(unused_imports)]
-pub mod parser;
-mod tokens;
+pub mod commands;
 mod constants;
-pub mod terminal;
+pub mod parser;
+pub mod terminal;mod tokens;
